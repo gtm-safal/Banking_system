@@ -1,6 +1,12 @@
-This is a minor project lead by students of BCT 2081 as a final project on C- Programming by the team members:
+# Banking_system
+# C-Programming Final Project
 
-(https://github.com/pratikkdahal)
-(https://github.com/RupeshThapa-064)
-(https://github.com/shekhar-limbu)
-(https://github.com/gtm-safal)
+This project is developed as part of the BCT 2081 course by the following team members:
+
+- **Pratik Dahal** [@pratikkdahal](https://github.com/pratikkdahal)
+- **Rupesh Thapa** [@RupeshThapa-064](https://github.com/RupeshThapa-064)
+- **Shekhar Limbu** [@shekhar-limbu](https://github.com/shekhar-limbu)
+- **Safal GTM** [@gtm-safal](https://github.com/gtm-safal)
+
+## Project Description
+This project focuses on 
