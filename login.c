@@ -1,5 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "loginPage.c"
+
 void clearBuffer() {
-    while (getchar() != '\n') ;  // Clear remaining input
+    while (getchar() != '\n')
+        ; // Clear remaining input
 }
 
 void login(int input) {
@@ -25,13 +31,13 @@ void login(int input) {
                 printf("Successfully logged in as Agent.\nPress 'Enter' to continue.\n");
                 pseudo = getchar();
                 fclose(fp);
+                adminProfile(username); // Call admin profile
                 return;
             }
         }
         printf("Username and password didn't match.\nPress 'Enter' to continue.\n");
         fclose(fp);
-    } 
-    else if (input == 2) { // Customer login
+    } else if (input == 2) { // Customer login
         fp = fopen("customerCredential.csv", "r");
         if (fp == NULL) {
             printf("Error opening customer credentials file.\n");
@@ -44,6 +50,7 @@ void login(int input) {
                 printf("Successfully logged in as Customer.\nPress 'Enter' to continue.\n");
                 pseudo = getchar();
                 fclose(fp);
+                customerProfile(username); // Call customer profile
                 return;
             }
         }
@@ -56,3 +63,4 @@ void login(int input) {
     getchar(); // To catch the Enter key after a failed attempt
     // You may return to main to retry, or loop again in main.c
 }
+

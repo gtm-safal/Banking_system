@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "login.c"
 
 int main() {
     int firstInput;
-    
+
     // Loop for retrying login until the user enters a valid option
     while (1) {
         system("clear");
@@ -16,10 +15,10 @@ int main() {
         printf("1. Agent login\n");
         printf("2. Customer login\n\n");
         printf("[Note : Enter respective number to enter login portal.]\n\n");
-        
+
         // Accept user input
         scanf("%d", &firstInput);
-        
+
         // If valid input is entered, call login
         if (firstInput == 1 || firstInput == 2) {
             login(firstInput);
