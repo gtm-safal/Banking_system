@@ -4,7 +4,8 @@
 #include "login.c"
 int main()
 {
-    int login;
+    int firstInput;
+    system("clear");
     printf("\n\n-------------------------------------------------------------------\n\n");
     printf("\t\t\tWelcome to Sabaiko Bank.\n\n");
     printf("-------------------------------------------------------------------\n\n");
@@ -12,11 +13,8 @@ int main()
     printf("1. Agent login\n");
     printf("2. Customer login\n\n");
     printf("[Note : Enter respective number to enter login portal.]\n\n");
-    scanf("%d", &login);
+    scanf("%d", &firstInput);
 
-    if (login == 1)
-        agentLogin();
-    if (login == 2)
-        customerLogin();
+    login(firstInput);
     return 0;
 }

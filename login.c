@@ -1,31 +1,61 @@
-void agentLogin()
+void login(int input)
 {
-    char agentUsrname[20], agentPass[16], usrname[20], pass[16];
+    char username[20], pass[16], fileUsername[20], filePass[16], pseudo;
     system("clear");
     printf("\nEnter agent's username: ");
-    scanf("%19s", agentUsrname);  // Prevents buffer overflow
-    printf("\nEnter agent's password: ");
-    scanf("%15s", agentPass);
+    scanf("%19s", username); // Prevents buffer overflow
+    printf("Enter agent's password: ");
+    scanf("%15s", pass);
+    clearBuffer();
 
     FILE *fp;
-    fp = fopen("adminCredential.csv", "r");
-
-    while (fscanf(fp, "%19[^,],%15s", usrname, pass) != EOF)  // Read username, password
+    if (input == 1)
     {
-        if (strcmp(usrname, agentUsrname) == 0 && strcmp(pass, agentPass) == 0)
+        fp = fopen("adminCredential.csv", "r");
+        while (fscanf(fp, "%19[^,],%15s", fileUsername, filePass) != EOF) // Read username, password
         {
-            printf("Successfully logged in\n");
-            fclose(fp);
-            return;
+            if (strcmp(username, fileUsername) == 0 && strcmp(pass, filePass) == 0)
+            {
+                system("clear");
+                printf("Successfully logged in.\nPress 'Enter' to continue.\n");
+                pseudo = getchar();
+                fclose(fp);
+                return 0;
+            }
         }
+
+        printf("Username and password didn't match.\nPress 'Enter' to continue.\n");
+        fclose(fp);
+        pseudo = getchar();
+        main();
+        return 1;
     }
 
-    printf("Username and password didn't match\n");
-    fclose(fp);
+    else if (input == 2)
+    {
+        fp = fopen("customerCredential.csv", "r");
+        while (fscanf(fp, "%19[^,],%15s", fileUsername, filePass) != EOF) // Read username, password
+        {
+            if (strcmp(username, fileUsername) == 0 && strcmp(pass, filePass) == 0)
+            {
+                system("clear");
+                printf("Successfully logged in.\nPress 'Enter' to continue.\n");
+                pseudo = getchar();
+                fclose(fp);
+                return 0;
+            }
+        }
+
+        printf("Username and password didn't match.\nPress 'Enter' to continue.\n");
+        fclose(fp);
+        pseudo = getchar();
+        main();
+        return 1;
+    }
 }
 
-void customerLogin()
+void clearBuffer()
 {
-    system("clear");
-    printf("1. Balance inquiry\n");
+    while (getchar() != '\n')
+        ;
 }
