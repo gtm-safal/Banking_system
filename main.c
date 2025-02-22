@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "login.h"  // Include login functionality
+#include "login.h"
 
 int main() {
     int firstInput;
@@ -12,7 +12,8 @@ int main() {
         printf("-------------------------------------------------------------------\n\n");
         printf("Account login:\n\n");
         printf("1. Agent login\n");
-        printf("2. Accholder login\n\n");
+        printf("2. Accholder login\n");
+        printf("3. Exit\n\n");
         printf("[Note : Enter respective number to enter login portal.]\n\n");
 
         if (scanf("%d", &firstInput) != 1) {
@@ -23,6 +24,8 @@ int main() {
 
         if (firstInput == 1 || firstInput == 2) {
             login(firstInput);
+        } else if (firstInput == 3) { // Exit option
+            printf("Exiting the program. Goodbye!\n");
             break;
         } else {
             printf("Invalid input. Please try again.\n");

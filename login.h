@@ -13,5 +13,6 @@ void adminProfile(char username[]);
 void accholderProfile(char username[]);
 void transferBalance(char senderUsername[]);
 void deleteAccholderAccount();
+void trimNewline(char *str);
 
 #endif // LOGIN_H
