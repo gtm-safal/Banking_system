@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "login.c"
+#include "login.h"  // Include login functionality
 
 int main() {
     int firstInput;
 
-    // Loop for retrying login until the user enters a valid option
     while (1) {
         system("clear");
         printf("\n\n-------------------------------------------------------------------\n\n");
@@ -13,19 +12,21 @@ int main() {
         printf("-------------------------------------------------------------------\n\n");
         printf("Account login:\n\n");
         printf("1. Agent login\n");
-        printf("2. Customer login\n\n");
+        printf("2. Accholder login\n\n");
         printf("[Note : Enter respective number to enter login portal.]\n\n");
 
-        // Accept user input
-        scanf("%d", &firstInput);
+        if (scanf("%d", &firstInput) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            while (getchar() != '\n'); // Clear invalid input
+            continue;
+        }
 
-        // If valid input is entered, call login
         if (firstInput == 1 || firstInput == 2) {
             login(firstInput);
-            break; // Exit the loop once the login process is done
+            break;
         } else {
             printf("Invalid input. Please try again.\n");
-            getchar(); // To handle the Enter key after invalid input
+            while (getchar() != '\n'); // Clear extra input
         }
     }
     return 0;
