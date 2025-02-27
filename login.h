@@ -14,5 +14,8 @@ void accholderProfile(char username[]);
 void transferBalance(char senderUsername[]);
 void deleteAccholderAccount();
 void trimNewline(char *str);
+void createAdminAccount();
+int isUsernameUnique(char *username);
+void changeUsernamePassword(char username[]);
 
 #endif // LOGIN_H
