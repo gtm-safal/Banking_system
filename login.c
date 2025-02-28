@@ -6,6 +6,7 @@ void login(int input) {
 
     printf("\nEnter username: ");
     scanf("%19s", username);
+    strlwr(username); // Convert to lowercase
     printf("Enter password: ");
     scanf("%15s", pass);
     clearBuffer();

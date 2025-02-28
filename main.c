@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "login.h"
+
 
 int main() {
     int firstInput;
@@ -8,11 +11,11 @@ int main() {
     while (1) {
         system("clear");
         printf("\n\n-------------------------------------------------------------------\n\n");
-        printf("\t\t\tWelcome to Sabaiko Bank.\n\n");
+        printf("\t\t\tWelcome to B&B Bank.\n\n");
         printf("-------------------------------------------------------------------\n\n");
         printf("Account login:\n\n");
         printf("1. Agent login\n");
-        printf("2. Accholder login\n");
+        printf("2. Account holder login\n");
         printf("3. Exit\n\n");
         printf("[Note : Enter respective number to enter login portal.]\n\n");
 
