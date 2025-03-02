@@ -3,26 +3,26 @@
 // Function to add balance to an account
 void addBalance() {
     char username[21], fname[21], lname[21], fileUsername[21], fileFname[21], fileLname[21];
-    float amount;
+    float amount, fileBalance;
     FILE *fp, *tempFp;
     char tempFile[] = "temp.csv";
     int found = 0;
 
     system("clear");
     printf("Enter the username of the account holder: ");
-    scanf("%20s", username);
+    fgets(username, sizeof(username), stdin);
+    trimNewline(username); // Remove newline
     strlwr(username); // Convert to lowercase
-    clearBuffer();
 
     printf("Enter the first name of the account holder: ");
-    scanf("%20s", fname);
+    fgets(fname, sizeof(fname), stdin);
+    trimNewline(fname); // Remove newline
     capitalize(fname);
-    clearBuffer();
 
     printf("Enter the last name of the account holder: ");
-    scanf("%20s", lname);
+    fgets(lname, sizeof(lname), stdin);
+    trimNewline(lname); // Remove newline
     capitalize(lname);
-    clearBuffer();
 
     printf("Enter the amount to add: ");
     scanf("%f", &amount);
@@ -47,13 +47,13 @@ void addBalance() {
         return;
     }
 
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s", fileFname, fileLname, &amount, &(long){0}, fileUsername) != EOF) {
+    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s", fileFname, fileLname, &fileBalance, &(long){0}, fileUsername) != EOF) {
         if (strcmp(username, fileUsername) == 0 && strcmp(fname, fileFname) == 0 && strcmp(lname, fileLname) == 0) {
             found = 1;
-            amount += amount; // Add the amount to the existing balance
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, amount, (long){0}, fileUsername);
+            fileBalance += amount; // Add the amount to the existing balance
+            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, (long){0}, fileUsername);
         } else {
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, amount, (long){0}, fileUsername);
+            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, (long){0}, fileUsername);
         }
     }
 
@@ -70,32 +70,32 @@ void addBalance() {
     remove("details.csv");
     rename(tempFile, "details.csv");
 
-    printf("Balance added successfully. New balance: Rs %.2f\n", amount);
+    printf("Balance added successfully. New balance: Rs %.2f\n", fileBalance);
 }
 
 // Function to withdraw balance from an account
 void withdrawBalance() {
     char username[21], fname[21], lname[21], fileUsername[21], fileFname[21], fileLname[21];
-    float amount, balance;
+    float amount, fileBalance;
     FILE *fp, *tempFp;
     char tempFile[] = "temp.csv";
     int found = 0;
 
     system("clear");
     printf("Enter the username of the account holder: ");
-    scanf("%20s", username);
+    fgets(username, sizeof(username), stdin);
+    trimNewline(username); // Remove newline
     strlwr(username); // Convert to lowercase
-    clearBuffer();
 
     printf("Enter the first name of the account holder: ");
-    scanf("%20s", fname);
+    fgets(fname, sizeof(fname), stdin);
+    trimNewline(fname); // Remove newline
     capitalize(fname);
-    clearBuffer();
 
     printf("Enter the last name of the account holder: ");
-    scanf("%20s", lname);
+    fgets(lname, sizeof(lname), stdin);
+    trimNewline(lname); // Remove newline
     capitalize(lname);
-    clearBuffer();
 
     printf("Enter the amount to withdraw: ");
     scanf("%f", &amount);
@@ -120,20 +120,20 @@ void withdrawBalance() {
         return;
     }
 
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s", fileFname, fileLname, &balance, &(long){0}, fileUsername) != EOF) {
+    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s", fileFname, fileLname, &fileBalance, &(long){0}, fileUsername) != EOF) {
         if (strcmp(username, fileUsername) == 0 && strcmp(fname, fileFname) == 0 && strcmp(lname, fileLname) == 0) {
             found = 1;
-            if (balance < amount) {
+            if (fileBalance < amount) {
                 printf("Insufficient balance.\n");
                 fclose(fp);
                 fclose(tempFp);
                 remove(tempFile);
                 return;
             }
-            balance -= amount; // Withdraw the amount from the existing balance
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, balance, (long){0}, fileUsername);
+            fileBalance -= amount; // Withdraw the amount from the existing balance
+            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, (long){0}, fileUsername);
         } else {
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, balance, (long){0}, fileUsername);
+            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, (long){0}, fileUsername);
         }
     }
 
@@ -150,5 +150,5 @@ void withdrawBalance() {
     remove("details.csv");
     rename(tempFile, "details.csv");
 
-    printf("Balance withdrawn successfully. New balance: Rs %.2f\n", balance);
+    printf("Balance withdrawn successfully. New balance: Rs %.2f\n", fileBalance);
 }

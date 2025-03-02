@@ -5,11 +5,13 @@ void login(int input) {
     system("clear");
 
     printf("\nEnter username: ");
-    scanf("%19s", username);
+    scanf("%s", username);
+    trimNewline(username); // Remove newline
     strlwr(username); // Convert to lowercase
+
     printf("Enter password: ");
-    scanf("%15s", pass);
-    clearBuffer();
+    scanf("%s", pass);
+    trimNewline(pass); // Remove newline
 
     FILE *fp;
     if (input == 1) { // Admin login
