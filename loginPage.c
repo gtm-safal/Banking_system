@@ -5,10 +5,11 @@ void adminProfile(char username[]) {
     int secondInput;
     while (1) {
         system("clear");
-        printf("Welcome to the Admin Profile!\n\n");
+        printf("%s!\n", username);
+        printf("Welcome to the Agent Profile!\n\n");
         printf("1. Create new account\n");
         printf("2. Delete account\n");
-        printf("3. Create admin account\n");
+        printf("3. Create agent account\n");
         printf("4. Add balance to an account\n");
         printf("5. Withdraw balance from an account\n");
         printf("6. Exit to Main Menu\n\n");
@@ -55,7 +56,7 @@ void accholderProfile(char username[]) {
     }
 
     int found = 0;
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s", fname, lname, &balance, &contact, fileUsername) != EOF) {
+    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fname, lname, &balance, &contact, fileUsername) != EOF) {
         if (strcmp(username, fileUsername) == 0) {
             found = 1;
             printf("Name: %s %s\n", fname, lname);
@@ -121,17 +122,14 @@ void createNewAccholder() {
         printf("Username: ");
         scanf("%20s", username);
         strlwr(username); // Convert to lowercase
+        clearBuffer();
 
         // Check if username already exists
         FILE *credFile = fopen("accholderCredential.csv", "r");
-        if (credFile == NULL) {
-            printf("Error: Unable to open accholderCredential.csv.\n");
-            return;
-        }
 
         char fileUsername[21], filePassword[17];
         int usernameExists = 0;
-        while (fscanf(credFile, "%20[^,],%16s", fileUsername, filePassword) != EOF) {
+        while (fscanf(credFile, "%20[^,],%16s\n", fileUsername, filePassword) != EOF) {
             if (strcmp(username, fileUsername) == 0) {
                 usernameExists = 1;
                 break;
@@ -142,19 +140,21 @@ void createNewAccholder() {
         if (!usernameExists) {
             break; // Username is unique
         } else {
-            printf("Username already exists. Please choose a different username.\n");
+            printf("Username already exists. Please choose a different username.\n\n");
         }
     }
 
     do {
         printf("Password (8-16 characters): ");
         scanf("%16s", password);
+        clearBuffer();
         if (strlen(password) < 8 || strlen(password) > 16) {
             printf("Password must be between 8 to 16 characters long.\n");
             continue;
         }
         printf("Confirm password: ");
         scanf("%16s", cpassword);
+        clearBuffer();
     } while (strcmp(password, cpassword) != 0);
 
     printf("Contact: ");
@@ -167,32 +167,27 @@ void createNewAccholder() {
 
     // Save to accholderCredential.csv
     fp = fopen("accholderCredential.csv", "a");
-    if (fp == NULL) {
-        printf("Error: Unable to open accholderCredential.csv.\n");
-        return;
-    }
+
     fprintf(fp, "%s,%s\n", username, password); // Save username and password
     fclose(fp);
 
     // Save to details.csv
     fp = fopen("details.csv", "a");
-    if (fp == NULL) {
-        printf("Error: Unable to open details.csv.\n");
-        return;
-    }
+
     fprintf(fp, "%s,%s,%.2f,%ld,%s\n", fname, lname, balance, contact, username); // Save account details
     fclose(fp);
 
-    printf("Account created successfully.\n");
+    printf("\nAccount created successfully.\n");
 }
 
 // Function to create an admin account
 void createAdminAccount() {
-    char username[21], password[17], line[100];
+    char username[21], password[17], fileUsername[21], filePassword[17];
     FILE *fp;
 
     system("clear");
-    printf("Enter the username of the existing customer account to promote to admin: ");
+    printf("[Note: Admin account can be created only for existing customer accounts.]\n\n");
+    printf("Enter the username of new admin: ");
     scanf("%20s", username);
     strlwr(username); // Convert to lowercase
     clearBuffer();
@@ -205,9 +200,10 @@ void createAdminAccount() {
     }
 
     int found = 0;
-    while (fscanf(fp, "%20[^,],%16s", username, password) != EOF) {
-        if (strcmp(username, username) == 0) {
+    while (fscanf(fp, "%20[^,],%16s\n", fileUsername, filePassword) != EOF) {
+        if (strcmp(username, fileUsername) == 0) {
             found = 1;
+            strcpy(password, filePassword); // Copy the password
             break;
         }
     }
@@ -249,7 +245,7 @@ void changeUsernamePassword(char oldUsername[]) {
     }
 
     int usernameExists = 0;
-    while (fscanf(fp, "%20[^,],%16s", line, line) != EOF) {
+    while (fscanf(fp, "%20[^,],%16s\n", line, line) != EOF) {
         if (strcmp(newUsername, line) == 0) {
             usernameExists = 1;
             break;
@@ -286,7 +282,7 @@ void changeUsernamePassword(char oldUsername[]) {
         return;
     }
 
-    while (fscanf(fp, "%20[^,],%16s", line, line) != EOF) {
+    while (fscanf(fp, "%20[^,],%16s\n", line, line) != EOF) {
         if (strcmp(oldUsername, line) != 0) {
             fprintf(tempFp, "%s,%s\n", line, line);
         } else {
@@ -313,7 +309,7 @@ void changeUsernamePassword(char oldUsername[]) {
         return;
     }
 
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s", line, line, &(float){0}, &(long){0}, line) != EOF) {
+    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", line, line, &(float){0}, &(long){0}, line) != EOF) {
         if (strcmp(oldUsername, line) != 0) {
             fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", line, line, (float){0}, (long){0}, line);
         } else {
@@ -359,7 +355,7 @@ void transferBalance(char senderUsername[]) {
     }
 
     int recipientFound = 0;
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s", line, line, &senderBalance, &(long){0}, line) != EOF) {
+    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", line, line, &senderBalance, &(long){0}, line) != EOF) {
         if (strcmp(senderUsername, line) == 0) {
             senderBalance = senderBalance;
         }
@@ -388,7 +384,7 @@ void transferBalance(char senderUsername[]) {
         return;
     }
 
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s", line, line, &senderBalance, &(long){0}, line) != EOF) {
+    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", line, line, &senderBalance, &(long){0}, line) != EOF) {
         if (strcmp(senderUsername, line) == 0) {
             fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", line, line, senderBalance - amount, (long){0}, line);
         } else if (strcmp(recipientUsername, line) == 0) {
@@ -417,11 +413,15 @@ void deleteAccholderAccount() {
     system("clear");
     printf("Enter Account holder's username to delete: ");
     scanf("%20s", username);
-    strlwr(username); // Convert to lowercase
     clearBuffer(); // Clear the input buffer
+    strlwr(username); // Convert to lowercase
 
     // Open accholderCredential.csv to remove the account
     fp = fopen("accholderCredential.csv", "r");
+    if (fp == NULL) {
+        printf("Error: Unable to open accholderCredential.csv.\n");
+        return;
+    }
 
     tempFp = fopen(tempFile, "w");
     if (tempFp == NULL) {
@@ -431,7 +431,8 @@ void deleteAccholderAccount() {
     }
 
     int accountFound = 0;
-    while (fscanf(fp, " ,%20[^,],%16s", fileUsername, password) != EOF) {
+    while (fscanf(fp, "%20[^,],%16s\n", fileUsername, password) != EOF) {
+        printf("%s %s\n", username, fileUsername);
         if (strcmp(username, fileUsername) != 0) {
             fprintf(tempFp, "%s,%s\n", fileUsername, password);
         } else {
@@ -465,7 +466,7 @@ void deleteAccholderAccount() {
     }
 
     accountFound = 0;
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s", fname, lname, &balance, &contact, fileUsername) != EOF) {
+    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fname, lname, &balance, &contact, fileUsername) == 5) {
         if (strcmp(username, fileUsername) != 0) {
             fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fname, lname, balance, contact, fileUsername);
         } else {
