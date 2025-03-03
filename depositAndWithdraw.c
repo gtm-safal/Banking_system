@@ -14,7 +14,7 @@ void depositBalance()
     printf("Enter the username of the account holder: ");
     scanf("%20s", username);
     clearBuffer();
-    strlwr(username); // Convert to lowercase
+    toLowerCase(username); // Convert to lowercase
 
     printf("Enter the amount to deposit: ");
     scanf("%f", &amount);
@@ -83,7 +83,7 @@ void withdrawBalance()
     printf("Enter the username of the account holder: ");
     scanf("%20s", username);
     clearBuffer();
-    strlwr(username); // Convert to lowercase
+    toLowerCase(username); // Convert to lowercase
 
     printf("Enter the amount to withdraw: ");
     scanf("%f", &amount);

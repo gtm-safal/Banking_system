@@ -8,7 +8,7 @@ void login(int input)
     printf("\nEnter username: ");
     scanf("%20s", username);
     trimNewline(username); // Remove newline
-    strlwr(username);      // Convert to lowercase
+    toLowerCase(username); // Convert to lowercase
 
     printf("Enter password: ");
     scanf("%16s", pass);
@@ -75,12 +75,12 @@ void transferBalanceAdmin()
     printf("Enter sender's username: ");
     scanf("%20s", senderUsername);
     clearBuffer();
-    strlwr(senderUsername); // Convert to lowercase
+    toLowerCase(senderUsername); // Convert to lowercase
 
     printf("Enter recipient's username: ");
     scanf("%20s", recipientUsername);
     clearBuffer();
-    strlwr(recipientUsername); // Convert to lowercase
+    toLowerCase(recipientUsername); // Convert to lowercase
 
     if (strcmp(senderUsername, recipientUsername) == 0)
     {
@@ -103,7 +103,7 @@ void transferBalanceAdmin()
     
     while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &senderBalance, &contact, fileUsername) != EOF)
     {
-        if (strcmp(recipientUsername, fileUsername) == 0)
+                if (strcmp(recipientUsername, fileUsername) == 0)
         {
             recipientFound = 1;
             recipientBalance = senderBalance;

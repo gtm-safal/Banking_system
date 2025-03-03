@@ -14,16 +14,17 @@
 
 // Function declarations
 void clearBuffer();
+void trimNewline(char *str);
+void capitalize(char *str);
+void toLowerCase(char *str);
+
 void login(int input);
 void createNewAccholder();
 void adminProfile(char username[]);
 void accholderProfile(char username[]);
 void transferBalance(char senderUsername[]);
 void deleteAccholderAccount();
-void trimNewline(char *str);
 void createAdminAccount();
-void capitalize(char *str);
-void strlwr(char *str);
 void depositBalance();
 void withdrawBalance();
 void changeUsernamePassword(char[]);

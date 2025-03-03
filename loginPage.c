@@ -150,7 +150,7 @@ void createNewAccholder()
     {
         printf("Username: ");
         scanf("%20s", username);
-        strlwr(username); // Convert to lowercase
+        toLowerCase(username); // Convert to lowercase
         clearBuffer();
 
         // Check if username already exists
@@ -227,7 +227,7 @@ void createAdminAccount()
     printf("[Note: Admin account can be created only for existing customer accounts.]\n\n");
     printf("Enter the username of new admin: ");
     scanf("%20s", username);
-    strlwr(username); // Convert to lowercase
+    toLowerCase(username); // Convert to lowercase
     clearBuffer();
 
     // Check if the username exists in accholderCredential.csv
@@ -275,7 +275,7 @@ void changeUsernamePassword(char oldUsername[])
     printf("Enter new username: ");
     scanf("%20s", newUsername);
     clearBuffer();
-    strlwr(newUsername); // Convert to lowercase
+    toLowerCase(newUsername); // Convert to lowercase
 
     printf("Enter new password: ");
     scanf("%16s", newPassword);
@@ -370,7 +370,7 @@ void transferBalance(char senderUsername[])
         printf("Enter recipient's username: ");
         scanf("%20s", recipientUsername);
         clearBuffer();
-        strlwr(recipientUsername); // Convert to lowercase
+        toLowerCase(recipientUsername); // Convert to lowercase
 
         if (strcmp(senderUsername, recipientUsername) == 0)
         {
@@ -470,7 +470,7 @@ void deleteAccholderAccount()
     printf("Enter Account holder's username to delete: ");
     scanf("%20s", username);
     clearBuffer();    // Clear the input buffer
-    strlwr(username); // Convert to lowercase
+    toLowerCase(username); // Convert to lowercase
 
     // Open accholderCredential.csv to remove the account
     fp = fopen("accholderCredential.csv", "r");

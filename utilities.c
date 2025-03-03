@@ -33,7 +33,7 @@ void capitalize(char *str)
 }
 
 // Convert a string to lowercase
-void strlwr(char *str)
+void toLowerCase(char *str)
 {
     int i = 0;
     while (str[i] != '\0')
