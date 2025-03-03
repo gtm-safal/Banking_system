@@ -12,7 +12,7 @@ int main()
     {
         system(CLEAR_SCREEN);
         printf("\n\n-------------------------------------------------------------------\n\n");
-        printf("\t\t\tWelcome to B&B Bank.\n\n");
+        printf("\t\t\tWelcome to Bits & Bytes Bank.\n\n");
         printf("-------------------------------------------------------------------\n\n");
         printf("Account login:\n\n");
         printf("1. Agent login\n");

@@ -17,6 +17,7 @@ void clearBuffer();
 void trimNewline(char *str);
 void capitalize(char *str);
 void toLowerCase(char *str);
+int isValidContact(long contact);
 
 void login(int input);
 void createNewAccholder();

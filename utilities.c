@@ -42,3 +42,15 @@ void toLowerCase(char *str)
         i++;
     }
 }
+
+// Validate if the contact number has exactly 10 digits
+int isValidContact(long contact)
+{
+    int count = 0;
+    while (contact != 0)
+    {
+        contact /= 10;
+        count++;
+    }
+    return count == 10;
+}
