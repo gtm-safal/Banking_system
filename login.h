@@ -18,8 +18,9 @@ void trimNewline(char *str);
 void createAdminAccount();
 void capitalize(char *str);
 void strlwr(char *str);
-void addBalance();
+void depositBalance();
 void withdrawBalance();
-void changeUsernamePassword(char []);
+void changeUsernamePassword(char[]);
+void transferBalanceAdmin();
 
 #endif // LOGIN_H
