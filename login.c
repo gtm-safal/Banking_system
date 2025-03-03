@@ -1,9 +1,9 @@
-#include "login.h"
+#include "utilities.h"
 
 void login(int input)
 {
     char username[21], pass[17], fileUsername[21], filePass[17];
-    system("clear");
+    system(CLEAR_SCREEN);
 
     printf("\nEnter username: ");
     scanf("%20s", username);
@@ -23,7 +23,7 @@ void login(int input)
         {
             if (strcmp(username, fileUsername) == 0 && strcmp(pass, filePass) == 0)
             {
-                system("clear");
+                system(CLEAR_SCREEN);
                 printf("\nSuccessfully logged in as Admin.\nPress 'Enter' to continue.\n");
                 getchar(); // Wait for Enter key
                 fclose(fp);
@@ -42,7 +42,7 @@ void login(int input)
         {
             if (strcmp(username, fileUsername) == 0 && strcmp(pass, filePass) == 0)
             {
-                system("clear");
+                system(CLEAR_SCREEN);
                 printf("\nSuccessfully logged in as Account holder.\nPress 'Enter' to continue.\n");
                 getchar(); // Wait for Enter key
                 fclose(fp);
@@ -71,7 +71,7 @@ void transferBalanceAdmin()
     char tempFile[] = "temp.csv";
     int senderFound = 0, recipientFound = 0;
 
-    system("clear");
+    system(CLEAR_SCREEN);
     printf("Enter sender's username: ");
     scanf("%20s", senderUsername);
     clearBuffer();
@@ -103,7 +103,7 @@ void transferBalanceAdmin()
     
     while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &senderBalance, &contact, fileUsername) != EOF)
     {
-                if (strcmp(recipientUsername, fileUsername) == 0)
+        if (strcmp(recipientUsername, fileUsername) == 0)
         {
             recipientFound = 1;
             recipientBalance = senderBalance;

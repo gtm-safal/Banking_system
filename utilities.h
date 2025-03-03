@@ -1,10 +1,16 @@
-#ifndef LOGIN_H
-#define LOGIN_H
+#ifndef UTILITIES_H
+#define UTILITIES_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+#ifdef _WIN32
+    #define CLEAR_SCREEN "cls"
+#else
+    #define CLEAR_SCREEN "clear"
+#endif
 
 // Function declarations
 void clearBuffer();
@@ -23,4 +29,4 @@ void withdrawBalance();
 void changeUsernamePassword(char[]);
 void transferBalanceAdmin();
 
-#endif // LOGIN_H
+#endif // UTILITIES_H

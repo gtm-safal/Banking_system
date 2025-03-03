@@ -1,4 +1,4 @@
-#include "login.h"
+#include "utilities.h"
 
 // Function to deposit balance to an account
 void depositBalance()
@@ -10,7 +10,7 @@ void depositBalance()
     char tempFile[] = "temp.csv";
     int found = 0;
 
-    system("clear");
+    system(CLEAR_SCREEN);
     printf("Enter the username of the account holder: ");
     scanf("%20s", username);
     clearBuffer();
@@ -79,7 +79,7 @@ void withdrawBalance()
     char tempFile[] = "temp.csv";
     int found = 0;
 
-    system("clear");
+    system(CLEAR_SCREEN);
     printf("Enter the username of the account holder: ");
     scanf("%20s", username);
     clearBuffer();

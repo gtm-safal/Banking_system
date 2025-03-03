@@ -1,4 +1,4 @@
-#include "login.h"
+#include "utilities.h"
 
 // Admin profile definition
 void adminProfile(char username[])
@@ -6,7 +6,7 @@ void adminProfile(char username[])
     int secondInput;
     while (1)
     {
-        system("clear");
+        system(CLEAR_SCREEN);
         printf("%s!\n", username);
         printf("Welcome to the Admin Profile!\n\n");
         printf("1. Create new account\n");
@@ -26,37 +26,37 @@ void adminProfile(char username[])
             createNewAccholder(); // Admin creates a new account holder account
             printf("Press 'Enter' to continue...");
             getchar(); // Pause before continuing
-            system("clear");
+            system(CLEAR_SCREEN);
             break;
         case 2:
             deleteAccholderAccount(); // Admin deletes an account holder account
             printf("Press 'Enter' to continue...");
             getchar(); // Pause before continuing
-            system("clear");
+            system(CLEAR_SCREEN);
             break;
         case 3:
             createAdminAccount(); // Admin creates an admin account
             printf("Press 'Enter' to continue...");
             getchar(); // Pause before continuing
-            system("clear");
+            system(CLEAR_SCREEN);
             break;
         case 4:
             depositBalance(); // Deposit balance to an account
             printf("Press 'Enter' to continue...");
             getchar(); // Pause before continuing
-            system("clear");
+            system(CLEAR_SCREEN);
             break;
         case 5:
             withdrawBalance(); // Withdraw balance from an account
             printf("Press 'Enter' to continue...");
             getchar(); // Pause before continuing
-            system("clear");
+            system(CLEAR_SCREEN);
             break;
         case 6:
             transferBalanceAdmin(); // Transfer balance as admin
             printf("Press 'Enter' to continue...");
             getchar(); // Pause before continuing
-            system("clear");
+            system(CLEAR_SCREEN);
             break;
         case 7:
             printf("Exiting to Main Menu...\n");
@@ -74,7 +74,7 @@ void accholderProfile(char username[])
     float balance;
     long contact;
     FILE *fp = fopen("details.csv", "r");
-    system("clear");
+    system(CLEAR_SCREEN);
 
     int found = 0;
     while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fname, lname, &balance, &contact, fileUsername) != EOF)
@@ -133,7 +133,7 @@ void createNewAccholder()
     long contact;
     FILE *fp;
 
-    system("clear");
+    system(CLEAR_SCREEN);
     printf("Enter account holder's details:\n\n");
     printf("First Name: ");
     scanf("%20s", fname);
@@ -213,7 +213,7 @@ void createNewAccholder()
     fprintf(fp, "%s,%s,%.2f,%ld,%s\n", fname, lname, balance, contact, username); // Save account details
     fclose(fp);
 
-    system("clear");
+    system(CLEAR_SCREEN);
     printf("\nAccount created successfully.\n");
 }
 
@@ -223,7 +223,7 @@ void createAdminAccount()
     char username[21], password[17], fileUsername[21], filePassword[17];
     FILE *fp;
 
-    system("clear");
+    system(CLEAR_SCREEN);
     printf("[Note: Admin account can be created only for existing customer accounts.]\n\n");
     printf("Enter the username of new admin: ");
     scanf("%20s", username);
@@ -271,7 +271,7 @@ void changeUsernamePassword(char oldUsername[])
     char tempFile[] = "temp.csv";
     int found = 0;
 
-    system("clear");
+    system(CLEAR_SCREEN);
     printf("Enter new username: ");
     scanf("%20s", newUsername);
     clearBuffer();
@@ -364,7 +364,7 @@ void transferBalance(char senderUsername[])
     char tempFile[] = "temp.csv";
     int recipientFound = 0;
 
-    system("clear");
+    system(CLEAR_SCREEN);
     while (1)
     {
         printf("Enter recipient's username: ");
@@ -466,7 +466,7 @@ void deleteAccholderAccount()
     long contact;
     FILE *fp, *tempFp;
 
-    system("clear");
+    system(CLEAR_SCREEN);
     printf("Enter Account holder's username to delete: ");
     scanf("%20s", username);
     clearBuffer();    // Clear the input buffer

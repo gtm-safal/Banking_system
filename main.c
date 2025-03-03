@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "login.h"
+#include "utilities.h"
 
 int main()
 {
@@ -10,7 +10,7 @@ int main()
 
     while (1)
     {
-        system("clear");
+        system(CLEAR_SCREEN);
         printf("\n\n-------------------------------------------------------------------\n\n");
         printf("\t\t\tWelcome to B&B Bank.\n\n");
         printf("-------------------------------------------------------------------\n\n");
