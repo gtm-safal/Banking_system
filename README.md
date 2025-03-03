@@ -18,3 +18,13 @@ This project focuses on creating a simple banking system using C programming. Th
 - **Account Management**: Admin functionalities to manage accounts, including deleting accounts and changing usernames/passwords.
 
 The project uses file handling to store and manage account details securely. It aims to provide a basic understanding of how banking systems operate and how to implement such systems using C programming.
+
+## How to use
+To use this file, it first needs to be compiled as:
+gcc main.c login.c depositAndWithdraw.c utilities.c -o main.exe
+
+And to run main.exe file can be executed:
+./main.exe
+
+To clone the repository:
+git clone https://github.com/gtm-safal/Banking_system.git
