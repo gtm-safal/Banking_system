@@ -193,9 +193,20 @@ void createNewAccholder()
         clearBuffer();
     } while (strcmp(password, cpassword) != 0);
 
-    printf("Contact: ");
-    scanf("%ld", &contact);
-    clearBuffer();
+    while (1)
+    {
+        printf("Contact: ");
+        scanf("%ld", &contact);
+        clearBuffer();
+        if (isValidContact(contact))
+        {
+            break;
+        }
+        else
+        {
+            printf("Invalid contact number. Please enter a 10-digit contact number.\n");
+        }
+    }
 
     printf("Enter initial balance: ");
     scanf("%f", &balance);
@@ -469,7 +480,7 @@ void deleteAccholderAccount()
     system(CLEAR_SCREEN);
     printf("Enter Account holder's username to delete: ");
     scanf("%20s", username);
-    clearBuffer();    // Clear the input buffer
+    clearBuffer();         // Clear the input buffer
     toLowerCase(username); // Convert to lowercase
 
     // Open accholderCredential.csv to remove the account

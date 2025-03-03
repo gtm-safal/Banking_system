@@ -4,7 +4,7 @@
 This project is developed as part of the BCT 2081 course by the following team members:
 
 - **Pratik Dahal** [@pratikkdahal](https://github.com/pratikkdahal)
-- **Rupesh Thapa** [@RupeshThapa-064](https://github.com/RupeshThapa-064)
+- **Rupesh Thapa** [@rup-ace-thapa](https://github.com/rup-ace-thapa)
 - **Shekhar Limbu** [@shekhar-limbu](https://github.com/shekhar-limbu)
 - **Safal Gautam** [@gtm-safal](https://github.com/gtm-safal)
 

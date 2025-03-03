@@ -65,7 +65,7 @@ void login(int input)
 void transferBalanceAdmin()
 {
     char senderUsername[21], recipientUsername[21], fileFname[21], fileLname[21], fileUsername[21];
-    float amount, senderBalance = 0, recipientBalance = 0;
+    float amount, senderBalance = 0, recipientBalance = 0, fileBalance;
     long contact;
     FILE *fp, *tempFp;
     char tempFile[] = "temp.csv";
@@ -92,7 +92,7 @@ void transferBalanceAdmin()
     scanf("%f", &amount);
     clearBuffer();
 
-    if (amount <= 0)
+    if (amount <= 0.00)
     {
         printf("Invalid amount. Please enter a positive value.\n");
         return;
@@ -101,15 +101,26 @@ void transferBalanceAdmin()
     // Open details.csv to find sender and recipient balances
     fp = fopen("details.csv", "r");
     
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &senderBalance, &contact, fileUsername) != EOF)
+    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &fileBalance, &contact, fileUsername) != EOF)
     {
-                if (strcmp(recipientUsername, fileUsername) == 0)
+        if (strcmp(senderUsername, fileUsername) == 0)
+        {
+            senderFound = 1;
+            senderBalance = fileBalance;
+        }
+        if (strcmp(recipientUsername, fileUsername) == 0)
         {
             recipientFound = 1;
-            recipientBalance = senderBalance;
+            recipientBalance = fileBalance;
         }
     }
     fclose(fp);
+
+    if (!senderFound)
+    {
+        printf("Sender not found.\n");
+        return;
+    }
 
     if (!recipientFound)
     {
@@ -119,7 +130,7 @@ void transferBalanceAdmin()
 
     if (senderBalance < amount)
     {
-        printf("Insufficient balance.\n");
+        printf("\nInsufficient balance.\n");
         return;
     }
 
@@ -134,7 +145,7 @@ void transferBalanceAdmin()
         return;
     }
 
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &senderBalance, &contact, fileUsername) != EOF)
+    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &fileBalance, &contact, fileUsername) != EOF)
     {
         if (strcmp(senderUsername, fileUsername) == 0)
         {
@@ -146,7 +157,7 @@ void transferBalanceAdmin()
         }
         else
         {
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, senderBalance, contact, fileUsername);
+            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, contact, fileUsername);
         }
     }
     fclose(fp);
@@ -156,8 +167,8 @@ void transferBalanceAdmin()
     remove("details.csv");
     rename(tempFile, "details.csv");
 
-    printf("\nTransfer successful.\n");
-    printf("Sender (%s) 's new balance: Rs %.2f\n", senderUsername, senderBalance - amount);
+    printf("\n\nTransfer successful.\n");
+    printf("\nSender (%s) 's new balance: Rs %.2f\n", senderUsername, senderBalance - amount);
     printf("Recipient (%s) 's new balance: Rs %.2f\n", recipientUsername, recipientBalance + amount);
     printf("\n\nPress 'Enter' to continue...");
     getchar(); // Pause before continuing
