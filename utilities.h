@@ -30,5 +30,6 @@ void depositBalance();
 void withdrawBalance();
 void changeUsernamePassword(char[]);
 void transferBalanceAdmin();
+void initialize_files();
 
 #endif // UTILITIES_H

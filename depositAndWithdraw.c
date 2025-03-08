@@ -28,7 +28,7 @@ void depositBalance()
 
     // Open details.csv to find the account
     fp = fopen("details.csv", "r");
-    
+
     tempFp = fopen(tempFile, "w");
     if (tempFp == NULL)
     {
@@ -97,7 +97,7 @@ void withdrawBalance()
 
     // Open details.csv to find the account
     fp = fopen("details.csv", "r");
-    
+
     tempFp = fopen(tempFile, "w");
     if (tempFp == NULL)
     {
@@ -145,3 +145,4 @@ void withdrawBalance()
 
     printf("\nBalance withdrawn successfully.\nNew Balance: Rs %.2f\n", amount);
 }
+

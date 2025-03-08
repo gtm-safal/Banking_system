@@ -18,7 +18,7 @@ void login(int input)
     if (input == 1)
     { // Admin login
         fp = fopen("adminCredential.csv", "r");
-        
+
         while (fscanf(fp, "%20[^,],%16s\n", fileUsername, filePass) != EOF)
         {
             if (strcmp(username, fileUsername) == 0 && strcmp(pass, filePass) == 0)
@@ -37,7 +37,7 @@ void login(int input)
     else if (input == 2)
     { // Accholder login
         fp = fopen("accholderCredential.csv", "r");
-        
+
         while (fscanf(fp, "%20[^,],%16s\n", fileUsername, filePass) != EOF)
         {
             if (strcmp(username, fileUsername) == 0 && strcmp(pass, filePass) == 0)
@@ -100,7 +100,7 @@ void transferBalanceAdmin()
 
     // Open details.csv to find sender and recipient balances
     fp = fopen("details.csv", "r");
-    
+
     while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &fileBalance, &contact, fileUsername) != EOF)
     {
         if (strcmp(senderUsername, fileUsername) == 0)
@@ -136,7 +136,7 @@ void transferBalanceAdmin()
 
     // Open details.csv again to update balances
     fp = fopen("details.csv", "r");
-    
+
     tempFp = fopen(tempFile, "w");
     if (tempFp == NULL)
     {

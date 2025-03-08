@@ -54,3 +54,4 @@ int isValidContact(long contact)
     }
     return count == 10;
 }
+

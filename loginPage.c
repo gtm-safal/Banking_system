@@ -110,6 +110,7 @@ void accholderProfile(char username[])
         break;
     case 'M':
     case 'm':
+        system(CLEAR_SCREEN);
         printf("Going back to main menu...\n");
         break;
     case 'Q':
@@ -207,9 +208,16 @@ void createNewAccholder()
             printf("Invalid contact number. Please enter a 10-digit contact number.\n");
         }
     }
-
-    printf("Enter initial balance: ");
-    scanf("%f", &balance);
+    do
+    {
+        printf("Enter initial balance: ");
+        scanf("%f", &balance);
+        if (balance < 0)
+        {
+            printf("Invalid balance. Please enter a positive value.\n");
+        }
+    } while (balance < 0);
+    
     clearBuffer();
 
     // Save to accholderCredential.csv
