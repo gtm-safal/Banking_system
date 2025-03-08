@@ -2,7 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
 #include "utilities.h"
+#include "login.c"
+#include "loginPage.c"
+#include "depositAndWithdraw.c"
+#include "utilities.c"
 
 int main()
 {
