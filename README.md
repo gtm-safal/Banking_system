@@ -28,4 +28,4 @@ The project uses **file handling** to store and manage account details securely.
 ### Compilation  
 To compile the project, run the following command:  
 ```sh
-gcc main.c -o main.exe && ./main.exe
+gcc main.c -o main.exe && ./main.exe 

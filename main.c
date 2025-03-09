@@ -117,3 +117,4 @@ void initialize_files()
     }
     fclose(adminFile);
 }
+

@@ -10,9 +10,9 @@ void login(int input)
     trimNewline(username); // Remove newline
     toLowerCase(username); // Convert to lowercase
 
+    clearBuffer(); 
     printf("Enter password: ");
-    scanf("%16s", pass);
-    trimNewline(pass); // Remove newline
+    getAndHidePassword(pass, sizeof(pass)); // Use getAndHidePassword to read the password
 
     FILE *fp;
     if (input == 1)

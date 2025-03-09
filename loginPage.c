@@ -120,9 +120,7 @@ void accholderProfile(char username[])
     default:
         printf("Invalid input!\n");
     }
-    printf("Press 'Enter' to continue...");
-    getchar(); // Pause before continuing
-
+    
     fclose(fp);
 }
 
@@ -182,16 +180,14 @@ void createNewAccholder()
     do
     {
         printf("Password (8-16 characters): ");
-        scanf("%16s", password);
-        clearBuffer();
+        getAndHidePassword(password, sizeof(password)); // Use getAndHidePassword to read the password
         if (strlen(password) < 8 || strlen(password) > 16)
         {
             printf("Password must be between 8 to 16 characters long.\n");
             continue;
         }
         printf("Confirm password: ");
-        scanf("%16s", cpassword);
-        clearBuffer();
+        getAndHidePassword(cpassword, sizeof(cpassword)); // Use getAndHidePassword to read the password
     } while (strcmp(password, cpassword) != 0);
 
     while (1)
@@ -282,7 +278,7 @@ void createAdminAccount()
 // Function to change username and password
 void changeUsernamePassword(char oldUsername[])
 {
-    char newUsername[21], newPassword[17], fileUsername[21], filePassword[17];
+    char newUsername[21], newPassword[17], confirmNewPassword[17], fileUsername[21], filePassword[17];
     char fname[21], lname[21];
     float balance;
     long contact;
@@ -296,9 +292,19 @@ void changeUsernamePassword(char oldUsername[])
     clearBuffer();
     toLowerCase(newUsername); // Convert to lowercase
 
-    printf("Enter new password: ");
-    scanf("%16s", newPassword);
-    clearBuffer();
+    do {
+        printf("Enter new password (8-16 characters): ");
+        getAndHidePassword(newPassword, sizeof(newPassword)); // Use getAndHidePassword to read the password
+        if (strlen(newPassword) < 8 || strlen(newPassword) > 16) {
+            printf("Password must be between 8 to 16 characters long.\n");
+            continue;
+        }
+        printf("Confirm new password: ");
+        getAndHidePassword(confirmNewPassword, sizeof(confirmNewPassword)); // Use getAndHidePassword to read the password
+        if (strcmp(newPassword, confirmNewPassword) != 0) {
+            printf("Passwords do not match. Please try again.\n");
+        }
+    } while (strcmp(newPassword, confirmNewPassword) != 0);
 
     // Open accholderCredential.csv to find and update the credentials
     fp = fopen("accholderCredential.csv", "r");
@@ -368,7 +374,7 @@ void changeUsernamePassword(char oldUsername[])
     remove("details.csv");
     rename(tempFile, "details.csv");
 
-    printf("Username and password changed successfully.\n");
+    printf("\nUsername and password changed successfully.\n");
     printf("Press 'Enter' to continue...");
     getchar(); // Pause before continuing
 }
