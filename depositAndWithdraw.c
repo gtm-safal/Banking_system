@@ -3,11 +3,11 @@
 // Function to deposit balance to an account
 void depositBalance()
 {
-    char username[21], fileFname[21], fileLname[21], fileUsername[21];
-    float amount, fileBalance;
-    long contact;
+    char username[21];
+    float amount;
+    Account account;
     FILE *fp, *tempFp;
-    char tempFile[] = "temp.csv";
+    char tempFile[] = "temp.dat";
     int found = 0;
 
     system(CLEAR_SCREEN);
@@ -26,10 +26,9 @@ void depositBalance()
         return;
     }
 
-    // Open details.csv to find the account
-    fp = fopen("details.csv", "r");
-
-    tempFp = fopen(tempFile, "w");
+    // Open details.dat to find the account
+    fp = fopen("details.dat", "rb");
+    tempFp = fopen(tempFile, "wb");
     if (tempFp == NULL)
     {
         printf("Error: Unable to open temporary file.\n");
@@ -37,19 +36,15 @@ void depositBalance()
         return;
     }
 
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &fileBalance, &contact, fileUsername) != EOF)
+    while (fread(&account, sizeof(Account), 1, fp))
     {
-        if (strcmp(username, fileUsername) == 0)
+        if (strcmp(username, account.username) == 0)
         {
             found = 1;
-            fileBalance += amount; // Add the amount to the existing balance
-            amount = fileBalance;
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, contact, fileUsername);
+            account.balance += amount; // Add the amount to the existing balance
+            amount = account.balance;
         }
-        else
-        {
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, contact, fileUsername);
-        }
+        fwrite(&account, sizeof(Account), 1, tempFp);
     }
 
     fclose(fp);
@@ -62,9 +57,9 @@ void depositBalance()
         return;
     }
 
-    // Replace details.csv with the updated file
-    remove("details.csv");
-    rename(tempFile, "details.csv");
+    // Replace details.dat with the updated file
+    remove("details.dat");
+    rename(tempFile, "details.dat");
 
     printf("\nBalance deposited successfully.\nNew Balance: Rs %.2f\n", amount);
 }
@@ -72,11 +67,11 @@ void depositBalance()
 // Function to withdraw balance from an account
 void withdrawBalance()
 {
-    char username[21], fileFname[21], fileLname[21], fileUsername[21];
-    float amount, fileBalance;
-    long contact;
+    char username[21];
+    float amount;
+    Account account;
     FILE *fp, *tempFp;
-    char tempFile[] = "temp.csv";
+    char tempFile[] = "temp.dat";
     int found = 0;
 
     system(CLEAR_SCREEN);
@@ -95,10 +90,9 @@ void withdrawBalance()
         return;
     }
 
-    // Open details.csv to find the account
-    fp = fopen("details.csv", "r");
-
-    tempFp = fopen(tempFile, "w");
+    // Open details.dat to find the account
+    fp = fopen("details.dat", "rb");
+    tempFp = fopen(tempFile, "wb");
     if (tempFp == NULL)
     {
         printf("Error: Unable to open temporary file.\n");
@@ -106,12 +100,12 @@ void withdrawBalance()
         return;
     }
 
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &fileBalance, &contact, fileUsername) != EOF)
+    while (fread(&account, sizeof(Account), 1, fp))
     {
-        if (strcmp(username, fileUsername) == 0)
+        if (strcmp(username, account.username) == 0)
         {
             found = 1;
-            if (fileBalance < amount)
+            if (account.balance < amount)
             {
                 printf("Insufficient balance.\n");
                 fclose(fp);
@@ -119,14 +113,10 @@ void withdrawBalance()
                 remove(tempFile);
                 return;
             }
-            fileBalance -= amount; // Withdraw the amount from the existing balance
-            amount = fileBalance;
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, contact, fileUsername);
+            account.balance -= amount; // Withdraw the amount from the existing balance
+            amount = account.balance;
         }
-        else
-        {
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, contact, fileUsername);
-        }
+        fwrite(&account, sizeof(Account), 1, tempFp);
     }
 
     fclose(fp);
@@ -139,9 +129,9 @@ void withdrawBalance()
         return;
     }
 
-    // Replace details.csv with the updated file
-    remove("details.csv");
-    rename(tempFile, "details.csv");
+    // Replace details.dat with the updated file
+    remove("details.dat");
+    rename(tempFile, "details.dat");
 
     printf("\nBalance withdrawn successfully.\nNew Balance: Rs %.2f\n", amount);
 }

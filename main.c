@@ -9,6 +9,7 @@
 #include "depositAndWithdraw.c"
 #include "utilities.c"
 
+//Main function
 int main()
 {
     int firstInput;
@@ -69,9 +70,10 @@ int main()
     return 0;
 }
 
+//Function to check exising files and create if not present
 void check_and_create_file(const char *filename)
 {
-    FILE *file = fopen(filename, "a");
+    FILE *file = fopen(filename, "ab");
     if (file == NULL)
     {
         fprintf(stderr, "Error creating file: %s\n", filename);
@@ -80,24 +82,26 @@ void check_and_create_file(const char *filename)
     fclose(file);
 }
 
+//Function to initialize files
 void initialize_files()
 {
-    check_and_create_file("adminCredential.csv");
-    check_and_create_file("accholderCredential.csv");
-    check_and_create_file("details.csv");
+    check_and_create_file("adminCredential.dat");
+    check_and_create_file("accholderCredential.dat");
+    check_and_create_file("details.dat");
 
-    // Check if adminCredential.csv is empty and add default admin credentials if it is
-    FILE *adminFile = fopen("adminCredential.csv", "r");
+    // Check if adminCredential.dat is empty and add default admin credentials if it is
+    FILE *adminFile = fopen("adminCredential.dat", "rb");
     if (adminFile == NULL)
     {
         // File does not exist, create it and add default admin credentials
-        adminFile = fopen("adminCredential.csv", "w");
+        adminFile = fopen("adminCredential.dat", "wb");
         if (adminFile == NULL)
         {
-            fprintf(stderr, "Error creating file: adminCredential.csv\n");
+            fprintf(stderr, "Error creating file: adminCredential.dat\n");
             exit(EXIT_FAILURE);
         }
-        fprintf(adminFile, "admin,admin\n");
+        Credential defaultAdmin = {"admin", "admin"};
+        fwrite(&defaultAdmin, sizeof(Credential), 1, adminFile);
     }
     else
     {
@@ -106,15 +110,15 @@ void initialize_files()
         if (ftell(adminFile) == 0) // File is empty
         {
             fclose(adminFile);
-            adminFile = fopen("adminCredential.csv", "w");
+            adminFile = fopen("adminCredential.dat", "wb");
             if (adminFile == NULL)
             {
-                fprintf(stderr, "Error opening file: adminCredential.csv\n");
+                fprintf(stderr, "Error opening file: adminCredential.dat\n");
                 exit(EXIT_FAILURE);
             }
-            fprintf(adminFile, "admin,admin\n");
+            Credential defaultAdmin = {"admin", "admin"};
+            fwrite(&defaultAdmin, sizeof(Credential), 1, adminFile);
         }
     }
     fclose(adminFile);
 }
-

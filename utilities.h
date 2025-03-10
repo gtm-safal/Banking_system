@@ -8,7 +8,7 @@
 
 #ifdef _WIN32
     #define CLEAR_SCREEN "cls"
-    #include <stdio.h>
+    #include <conio.h>
 #else
     #define CLEAR_SCREEN "clear"
     #include <termio.h>
@@ -34,5 +34,19 @@ void changeUsernamePassword(char[]);
 void transferBalanceAdmin();
 void initialize_files();
 void getAndHidePassword(char *password, int size);
+void viewAccountHolders();
+
+typedef struct {
+    char username[21];
+    char password[17];
+} Credential;
+
+typedef struct {
+    char fname[21];
+    char lname[21];
+    float balance;
+    long contact;
+    char username[21];
+} Account;
 
 #endif // UTILITIES_H

@@ -1,4 +1,10 @@
 #include "utilities.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <termios.h>
+#include <unistd.h>
 
 // Clear the input buffer
 void clearBuffer()
@@ -55,46 +61,55 @@ int isValidContact(long contact)
     return count == 10;
 }
 
-//To hide password using '*' character
-void getAndHidePassword(char *password, int size) {
+// To hide password using '*' character
+void getAndHidePassword(char *password, int size)
+{
     int i = 0;
     char ch;
 
-
-    #ifdef _WIN32
-        while ((ch = _getch()) != '\r' && i < size - 1) { // '\r' is Enter key
-            if (ch == '\b' && i > 0) {  // Handle backspace
-                i--;
-                printf("\b \b");
-            } else if (isprint(ch)) {  // Accept only printable characters
-                password[i++] = ch;
-                printf("*"); // Print '*' instead of actual input
-            }
+#ifdef _WIN32
+    while ((ch = _getch()) != '\r' && i < size - 1)
+    { // '\r' is Enter key
+        if (ch == '\b' && i > 0)
+        { // Handle backspace
+            i--;
+            printf("\b \b");
         }
-    #else
-        struct termios oldt, newt;
-        tcgetattr(STDIN_FILENO, &oldt);  // Get current terminal settings
-        newt = oldt;
-        newt.c_lflag &= ~(ECHO | ICANON); // Disable echo and canonical mode
-        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
-        while ((ch = getchar()) != '\n' && i < size - 1) {
-            if (ch == 127 && i > 0) {  // Handle backspace (ASCII 127)
-                i--;
-                printf("\b \b");
-            } else if (isprint(ch)) {  // Accept only printable characters
-                password[i++] = ch;
-                printf("*"); // Print '*' instead of actual input
-            }
+        else if (isprint(ch))
+        { // Accept only printable characters
+            password[i++] = ch;
+            printf("*"); // Print '*' instead of actual input
         }
+    }
+#else
+    struct termios oldt, newt;
+    tcgetattr(STDIN_FILENO, &oldt); // Get current terminal settings
+    newt = oldt;
+    newt.c_lflag &= ~(ECHO | ICANON); // Disable echo and canonical mode
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
-        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);  // Restore terminal settings
-    #endif
-
-        password[i] = '\0'; // Null-terminate password
-        printf("\n");
-
-        if (i >= size - 1) {
-            printf("Warning: Password exceeds maximum length. Truncated.\n");
+    while ((ch = getchar()) != '\n' && i < size - 1)
+    {
+        if (ch == 127 && i > 0)
+        { // Handle backspace (ASCII 127)
+            i--;
+            printf("\b \b");
         }
+        else if (isprint(ch))
+        { // Accept only printable characters
+            password[i++] = ch;
+            printf("*"); // Print '*' instead of actual input
+        }
+    }
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Restore terminal settings
+#endif
+
+    password[i] = '\0'; // Null-terminate password
+    printf("\n");
+
+    if (i >= size - 1)
+    {
+        printf("Warning: Password exceeds maximum length. Truncated.\n");
+    }
 }

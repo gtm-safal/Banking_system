@@ -1,8 +1,10 @@
 #include "utilities.h"
 
+// Function to login Portal
 void login(int input)
 {
-    char username[21], pass[17], fileUsername[21], filePass[17];
+    char username[21], pass[17];
+    Credential credential;
     system(CLEAR_SCREEN);
 
     printf("\nEnter username: ");
@@ -17,11 +19,11 @@ void login(int input)
     FILE *fp;
     if (input == 1)
     { // Admin login
-        fp = fopen("adminCredential.csv", "r");
+        fp = fopen("adminCredential.dat", "rb");
 
-        while (fscanf(fp, "%20[^,],%16s\n", fileUsername, filePass) != EOF)
+        while (fread(&credential, sizeof(Credential), 1, fp))
         {
-            if (strcmp(username, fileUsername) == 0 && strcmp(pass, filePass) == 0)
+            if (strcmp(username, credential.username) == 0 && strcmp(pass, credential.password) == 0)
             {
                 system(CLEAR_SCREEN);
                 printf("\nSuccessfully logged in as Admin.\nPress 'Enter' to continue.\n");
@@ -36,11 +38,11 @@ void login(int input)
     }
     else if (input == 2)
     { // Accholder login
-        fp = fopen("accholderCredential.csv", "r");
+        fp = fopen("accholderCredential.dat", "rb");
 
-        while (fscanf(fp, "%20[^,],%16s\n", fileUsername, filePass) != EOF)
+        while (fread(&credential, sizeof(Credential), 1, fp))
         {
-            if (strcmp(username, fileUsername) == 0 && strcmp(pass, filePass) == 0)
+            if (strcmp(username, credential.username) == 0 && strcmp(pass, credential.password) == 0)
             {
                 system(CLEAR_SCREEN);
                 printf("\nSuccessfully logged in as Account holder.\nPress 'Enter' to continue.\n");
@@ -64,11 +66,11 @@ void login(int input)
 // Function to transfer balance for admin
 void transferBalanceAdmin()
 {
-    char senderUsername[21], recipientUsername[21], fileFname[21], fileLname[21], fileUsername[21];
-    float amount, senderBalance = 0, recipientBalance = 0, fileBalance;
-    long contact;
+    char senderUsername[21], recipientUsername[21];
+    float amount, senderBalance = 0, recipientBalance = 0;
+    Account account;
     FILE *fp, *tempFp;
-    char tempFile[] = "temp.csv";
+    char tempFile[] = "temp.dat";
     int senderFound = 0, recipientFound = 0;
 
     system(CLEAR_SCREEN);
@@ -98,20 +100,25 @@ void transferBalanceAdmin()
         return;
     }
 
-    // Open details.csv to find sender and recipient balances
-    fp = fopen("details.csv", "r");
-
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &fileBalance, &contact, fileUsername) != EOF)
+    // Open details.dat to find sender and recipient balances
+    fp = fopen("details.dat", "rb");
+    if (fp == NULL)
     {
-        if (strcmp(senderUsername, fileUsername) == 0)
+        printf("Error: Unable to open details.dat file.\n");
+        return;
+    }
+
+    while (fread(&account, sizeof(Account), 1, fp))
+    {
+        if (strcmp(senderUsername, account.username) == 0)
         {
             senderFound = 1;
-            senderBalance = fileBalance;
+            senderBalance = account.balance;
         }
-        if (strcmp(recipientUsername, fileUsername) == 0)
+        if (strcmp(recipientUsername, account.username) == 0)
         {
             recipientFound = 1;
-            recipientBalance = fileBalance;
+            recipientBalance = account.balance;
         }
     }
     fclose(fp);
@@ -134,10 +141,15 @@ void transferBalanceAdmin()
         return;
     }
 
-    // Open details.csv again to update balances
-    fp = fopen("details.csv", "r");
+    // Open details.dat again to update balances
+    fp = fopen("details.dat", "rb");
+    if (fp == NULL)
+    {
+        printf("Error: Unable to open details.dat file.\n");
+        return;
+    }
 
-    tempFp = fopen(tempFile, "w");
+    tempFp = fopen(tempFile, "wb");
     if (tempFp == NULL)
     {
         printf("Error: Unable to open temporary file.\n");
@@ -145,27 +157,24 @@ void transferBalanceAdmin()
         return;
     }
 
-    while (fscanf(fp, "%20[^,],%20[^,],%f,%ld,%20s\n", fileFname, fileLname, &fileBalance, &contact, fileUsername) != EOF)
+    while (fread(&account, sizeof(Account), 1, fp))
     {
-        if (strcmp(senderUsername, fileUsername) == 0)
+        if (strcmp(senderUsername, account.username) == 0)
         {
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, senderBalance - amount, contact, fileUsername);
+            account.balance = senderBalance - amount;
         }
-        else if (strcmp(recipientUsername, fileUsername) == 0)
+        else if (strcmp(recipientUsername, account.username) == 0)
         {
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, recipientBalance + amount, contact, fileUsername);
+            account.balance = recipientBalance + amount;
         }
-        else
-        {
-            fprintf(tempFp, "%s,%s,%.2f,%ld,%s\n", fileFname, fileLname, fileBalance, contact, fileUsername);
-        }
+        fwrite(&account, sizeof(Account), 1, tempFp);
     }
     fclose(fp);
     fclose(tempFp);
 
-    // Replace details.csv with updated temp file
-    remove("details.csv");
-    rename(tempFile, "details.csv");
+    // Replace details.dat with updated temp file
+    remove("details.dat");
+    rename(tempFile, "details.dat");
 
     printf("\n\nTransfer successful.\n");
     printf("\nSender (%s) 's new balance: Rs %.2f\n", senderUsername, senderBalance - amount);
