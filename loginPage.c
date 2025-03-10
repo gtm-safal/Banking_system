@@ -234,7 +234,7 @@ void createNewAccholder()
         return;
     }
 
-    Credential newCredential = {0};
+    Credential newCredential ;
     strncpy(newCredential.username, username, sizeof(newCredential.username) - 1);
     strncpy(newCredential.password, password, sizeof(newCredential.password) - 1);
     fwrite(&newCredential, sizeof(Credential), 1, fp);

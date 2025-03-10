@@ -9,7 +9,7 @@
 #include "depositAndWithdraw.c"
 #include "utilities.c"
 
-//Main function
+// Main function
 int main()
 {
     int firstInput;
@@ -26,16 +26,17 @@ int main()
 
         printf("\n");
         printf("\n");
-        printf("+----------------------------------------C_PROJECT----------------------------------------------------+\n");
-        printf("|                                                                                                     |\n");
-        printf("|       ██████╗ ██╗████████╗███████╗       ██╗       ██████╗ ██╗   ██╗████████╗███████╗███████╗       |\n");
-        printf("|       ██╔══██╗██║╚══██╔══╝██╔════╝       ██║       ██╔══██╗╚██╗ ██╔╝╚══██╔══╝██╔════╝██╔════╝       |\n");
-        printf("|       ██████╔╝██║   ██║   ███████╗    ████████╗    ██████╔╝ ╚████╔╝    ██║   █████╗  ███████╗       |\n");
-        printf("|       ██╔══██╗██║   ██║   ╚════██║    ██╔═██╔═╝    ██╔══██╗  ╚██╔╝     ██║   ██╔══╝  ╚════██║       |\n");
-        printf("|       ██████╔╝██║   ██║   ███████║    ██████║      ██████╔╝   ██║      ██║   ███████╗███████║       |\n");
-        printf("|       ╚═════╝ ╚═╝   ╚═╝   ╚══════╝    ╚═════╝      ╚═════╝    ╚═╝      ╚═╝   ╚══════╝╚══════╝       |\n");
-        printf("|                                                                                                     |\n");
-        printf("+-----------------------------------------------------------------------------------------------------+\n");
+        printf("+------------------- C_Project -----------------------+\n");
+        printf("|                                                     |\n");
+        printf("|   ____         ____    ____              _          |\n");
+        printf("|  |  _ \\  ___  |  _ \\  |  _ \\            | |         |\n");
+        printf("|  | |_) |( _ ) | |_) | | |_) | __ _ _ __ | | __      |\n");
+        printf("|  |  _ < / _ \\/\\  _ <  |  _ < / _` | '_ \\| |/ /      |\n");
+        printf("|  | |_) | (_>  < |_) | | |_) | (_| | | | |   <       |\n");
+        printf("|  |____/ \\___/\\/____/  |____/ \\__,_|_| |_|_|\\_\\      |\n");
+        printf("|                                                     |\n");
+        printf("+-----------------------------------------------------+\n");
+
         printf("\n");
         printf("Account login:\n\n");
         printf("1. Agent login\n");
@@ -70,7 +71,7 @@ int main()
     return 0;
 }
 
-//Function to check exising files and create if not present
+// Function to check exising files and create if not present
 void check_and_create_file(const char *filename)
 {
     FILE *file = fopen(filename, "ab");
@@ -82,7 +83,7 @@ void check_and_create_file(const char *filename)
     fclose(file);
 }
 
-//Function to initialize files
+// Function to initialize files
 void initialize_files()
 {
     check_and_create_file("adminCredential.dat");

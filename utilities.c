@@ -26,16 +26,15 @@ void trimNewline(char *str)
 
 // Capitalize the first letter of each word in a string
 void capitalize(char *str)
-{
-    int i = 0;
-    while (str[i] != '\0')
+{   
+    int i =1;
+    str[0] = toupper(str[0]);
+    while (str[i]!='\0')
     {
-        if (i == 0 || str[i - 1] == ' ')
-        {
-            str[i] = toupper(str[i]);
-        }
+        str[i] = tolower(str[i]);
         i++;
     }
+    
 }
 
 // Convert a string to lowercase
