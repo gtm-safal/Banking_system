@@ -50,3 +50,4 @@ typedef struct {
 } Account;
 
 #endif // UTILITIES_H
+

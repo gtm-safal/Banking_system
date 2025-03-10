@@ -5,8 +5,9 @@
 
 #include "utilities.h"
 #include "login.c"
-#include "loginPage.c"
+#include "adminSection.c"
 #include "depositAndWithdraw.c"
+#include "accHolderSection.c"
 #include "utilities.c"
 
 // Main function
